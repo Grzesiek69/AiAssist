@@ -36,3 +36,4 @@ curl -F file=@products.csv -F baseUrl=https://twoj-sklep.myshopify.com http://lo
 GET http://localhost:8080/search?q=dyfuzor%20M3%20G80%20karbon%20po%C5%82ysk&limit=5
 GET http://localhost:8080/search?make=BMW&model=M3&chassis=G80&lci=true&material=carbon&finish=gloss&category=diffuser&priceMax=2500
 ```
+# AiAssist
