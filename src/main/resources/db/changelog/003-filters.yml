@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-filters
+      author: kitsune
+      changes:
+        - sql:
+            sql: |
+              select 1;

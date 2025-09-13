@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-init
+      author: kitsune
+      changes:
+        - sql:
+            splitStatements: true
+            sql: |
+              create extension if not exists pg_trgm;
+              create extension if not exists unaccent;
+
+              create table if not exists t_product_idx (
+                id bigserial primary key,
+                type varchar(16) not null,
+                product_id varchar(64),
+                variant_id varchar(64),
+                collection_id varchar(64),
+                handle text,
+                sku text,
+                title text,
+                vendor text,
+                tags jsonb,
+                collections jsonb,
+                description_text text,
+                metafields jsonb,
+                price numeric,
+                currency varchar(8),
+                available boolean,
+                image_url text,
+                url text,
+                car_model text,
+                chassis text,
+                body_style text,
+                lci boolean,
+                material text,
+                finish text,
+                make text,
+                category text,
+                searchable tsvector generated always as (
+                  to_tsvector('simple',
+                    coalesce(unaccent(title),'') || ' ' ||
+                    coalesce(unaccent(description_text),'') || ' ' ||
+                    coalesce(array_to_string(ARRAY(SELECT jsonb_array_elements_text(tags)), ' '), '')
+                  )
+                ) stored
+              );
+
+              create index if not exists idx_product_idx_searchable on t_product_idx using gin (searchable);
+              create index if not exists idx_product_idx_handle on t_product_idx (handle);
+              create index if not exists idx_product_idx_sku on t_product_idx (sku);
+              create index if not exists idx_product_idx_available on t_product_idx (available);
+              create index if not exists idx_product_idx_vendor on t_product_idx (vendor);
+              create index if not exists idx_idx_car_model   on t_product_idx (car_model);
+              create index if not exists idx_idx_chassis     on t_product_idx (chassis);
+              create index if not exists idx_idx_body_style  on t_product_idx (body_style);
+              create index if not exists idx_idx_lci         on t_product_idx (lci);
+              create index if not exists idx_idx_material    on t_product_idx (material);
+              create index if not exists idx_idx_finish      on t_product_idx (finish);
+              create index if not exists idx_idx_make        on t_product_idx (make);
+              create index if not exists idx_idx_category    on t_product_idx (category);

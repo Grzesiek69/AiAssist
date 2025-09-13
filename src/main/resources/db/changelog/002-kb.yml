@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-kb
+      author: kitsune
+      changes:
+        - sql:
+            sql: |
+              create table if not exists t_kb_docs (
+                id bigserial primary key,
+                source varchar(64) not null,
+                title text,
+                body text not null,
+                lang varchar(8) default 'pl',
+                tags text[],
+                searchable tsvector generated always as (
+                  to_tsvector('simple', coalesce(unaccent(title),'') || ' ' || coalesce(unaccent(body),''))
+                ) stored
+              );
+              create index if not exists idx_kb_search on t_kb_docs using gin (searchable);

@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shopify}
+    username: ${DB_USER:shopify}
+    password: ${DB_PASS:shopify}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yml
+
+assistant:
+  baseUrl: ${BASE_URL:https://yourshop.myshopify.com}
+  shopify:
+    shop: ${SHOPIFY_SHOP:yourshop}
+    adminToken: ${SHOPIFY_ADMIN_TOKEN:changeme}
+    webhookSecret: ${SHOPIFY_WEBHOOK_SECRET:changeme}
+    apiVersion: ${SHOPIFY_API_VERSION:2024-07}
