@@ -1,0 +1,6 @@
+* text=auto
+*.yml text eol=lf
+*.yaml text eol=lf
+*.java text eol=lf
+*.kt text eol=lf
+*.md text eol=lf

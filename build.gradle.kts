@@ -19,6 +19,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework:spring-webflux")
     implementation("com.fasterxml.jackson.core:jackson-databind")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
@@ -30,8 +31,10 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
     implementation("org.apache.commons:commons-csv:1.11.0")
+    implementation("com.bucket4j:bucket4j-core:8.10.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.h2database:h2")
 }
 
 tasks.test { useJUnitPlatform() }
