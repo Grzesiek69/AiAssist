@@ -82,9 +82,9 @@ public class SearchService {
 
     private List<ProductDoc> trySku(String q) {
         var up = (q==null?"" : q).toUpperCase(Locale.ROOT);
-        if (up.matches(".*[A-Z0-9\-]{4,}.*")) {
+        if (up.matches(".*[A-Z0-9-]{4,}.*")) {
             var token = Arrays.stream(up.split("\s+"))
-                    .filter(t -> t.matches("[A-Z0-9\-]{4,}"))
+                    .filter(t -> t.matches("[A-Z0-9-]{4,}"))
                     .findFirst().orElse(null);
             if (token != null) return repo.findTop5BySkuIgnoreCaseOrderByAvailableDesc(token);
         }
